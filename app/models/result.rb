@@ -1,6 +1,6 @@
 class Result < ActiveRecord::Base
   acts_as_paranoid
-  
+
   belongs_to :search
   belongs_to :account
 
@@ -22,6 +22,10 @@ class Result < ActiveRecord::Base
                     :tsearch => { dictionary: 'scws_parser'}
                   }
 
+
+  def abs_url
+    URI.join("http://#{self.domain}", self.url)
+  end
 
   private
   def set_account

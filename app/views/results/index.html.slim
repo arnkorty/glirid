@@ -34,7 +34,7 @@
           div.reveal-modal id="result-modal-#{result.id}" data-reveal=true aria-hidden="true" role="dialog"
             / h3 = link_to result.title, result.url
             / .content = simple_format(result.description)
-        td = link_to 'Go to URL', result.url, target: '_blank', title: result.url
+        td = link_to 'Go to URL', result.abs_url, target: '_blank', title: result.abs_url
         td = result.updated_at.to_s(:db)
         td 
           = link_to result, data: {:confirm => t('common.are_you_sure_and_never_spider')}, :method => :delete, remote: true do
