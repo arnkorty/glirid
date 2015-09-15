@@ -101,4 +101,5 @@ group :development do
   gem 'rack-livereload'
   gem 'guard-livereload'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'mina-sidekiq'
 end
