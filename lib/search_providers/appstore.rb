@@ -4,7 +4,7 @@ module SearchProvider
     def self.provider_name
       'Apple Store Search'
     end
-    
+
     kortype :query, type: String, desc: 'define your search keyword', required: true
     kortype :limit, type: Integer, desc: 'define your query limit'
     kortype :match_all, type: String, enums: ['Yes', 'No'], desc: 'Is match all?',\
@@ -16,7 +16,7 @@ module SearchProvider
       results = []
       if res
         search_results = JSON.parse res
-        search_results['results'].each do |result|
+        search_results['results'].reverse.each do |result|
           skiq_result = false
           if self.match_all
             self.query.split(' ').each do |term|

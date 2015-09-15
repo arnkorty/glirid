@@ -17,7 +17,7 @@ module SearchProvider
       if rss
         feed = ::RSS::Parser.parse(rss)
         feed_title = "#{feed.try(:channel).try(:title) || feed.try(:title)}"
-        feed.items.each do |result|
+        feed.items.reverse.each do |result|
           skip_next = false
           if regex &&
             !(result.try(:title).to_s.match(regex) ||

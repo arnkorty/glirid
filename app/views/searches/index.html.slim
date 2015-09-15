@@ -3,7 +3,7 @@
   .small-12.text-left
     = link_to t('common.new'), new_search_path, class: 'button tiny'
     | &nbsp;&nbsp;
-    = link_to t('common.run_all'), '', class: 'button tiny'
+    = link_to t('common.run_all'), searches_path(run: :all), class: 'button tiny'
   table.large-12
     tr
       th = t('activerecord.attributes.search.name')

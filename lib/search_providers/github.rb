@@ -4,7 +4,9 @@ module SearchProvider
     def self.provider_name
       "Github Repositories Search"
     end
-    kortype :query, :sort, :order, type: String, desc: 'query keyword'
+    kortype :query, type: String, desc: 'query keyword', required: true
+    kortype :sort, type: String, desc: 'search sort'
+    kortype :order, type: String, desc: 'search order'
     kortype :page_count, type: Integer, default: 1, desc: 'define page total number'
 
     def run
@@ -16,7 +18,7 @@ module SearchProvider
         search_results = JSON.parse(res)
         break unless search_results['items']
         current_page += 1
-        search_results['items'].each do |result|
+        search_results['items'].reverse.each do |result|
           result = {
             title: result['name'],
             url: result['html_url'],

@@ -47,7 +47,7 @@ gem 'devise'
 
 gem 'slim-rails'
 
-gem 'google-api-client', '~> 0.9.pre'
+#gem 'google-api-client', '~> 0.9.pre'
 
 # force type
 gem 'kortype', github: 'arnkorty/kortype'

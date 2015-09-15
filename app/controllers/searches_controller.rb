@@ -4,7 +4,10 @@ class SearchesController < ApplicationController
   # GET /searches
   # GET /searches.json
   def index
-    @searches = Search.all
+    @searches = current_account.searches
+    if params[:run] == 'all'
+      @searches.each{|s| s.sync_run}
+    end
   end
 
   # GET /searches/1
@@ -71,11 +74,9 @@ class SearchesController < ApplicationController
   end
 
   def run
-    @search.current_work_id = SearchJob.perform_later(@search.id).job_id
-    @search.save
-    SyncStatus.sync(@search.current_work_id)
+    @search.sync_run
     if request.xhr?
-      render js: "alert('success')"
+      render js: "alert('#{t('success')}')"
     else
       redirect_to @search
     end
@@ -84,7 +85,7 @@ class SearchesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_search
-      @search = Search.find(params[:id])
+      @search ||= Search.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -93,9 +94,9 @@ class SearchesController < ApplicationController
     end
 
     def provider_params
-      if params[:search] && params[:search][:provider] && \
-        Object.const_defined?(params[:search][:provider])
-        params[:search][:provider].constantize.kortype_columns.keys
+      if params[:search] && (params[:search][:provider] || set_search.try(:provider)) &&\
+        Object.const_defined?(params[:search][:provider] || set_search.try(:provider))
+        (params[:search][:provider] || set_search.try(:provider)).constantize.kortype_columns.keys
       else
         []
       end

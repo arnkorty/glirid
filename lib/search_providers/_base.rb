@@ -35,13 +35,5 @@ module  SearchProvider
     def run
       raise 'Please set run method'
     end
-
-    def stop
-    end
-
-    def start
-    end
-    def update
-    end
   end
 end

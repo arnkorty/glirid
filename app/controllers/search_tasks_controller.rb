@@ -31,7 +31,7 @@ class SearchTasksController < ApplicationController
     @search_task.search = @search if @search
     respond_to do |format|
       if @search_task.save
-        format.html { redirect_to @search || @search_task, notice: 'Search task was successfully created.' }
+        format.html { redirect_to @search || search_tasks_path, notice: 'Search task was successfully created.' }
         format.json { render :show, status: :created, location: @search_task }
       else
         format.html { render :new }
@@ -45,7 +45,7 @@ class SearchTasksController < ApplicationController
   def update
     respond_to do |format|
       if @search_task.update(search_task_params)
-        format.html { redirect_to (@search || @search_task), notice: 'Search task was successfully updated.' }
+        format.html { redirect_to (@search || search_tasks_path), notice: 'Search task was successfully updated.' }
         format.json { render :show, status: :ok, location: @search_task }
       else
         format.html { render :edit }

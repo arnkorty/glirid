@@ -7,18 +7,10 @@ module SearchProvider
     kortype :custom_type, type: String, enums: ['HTML', 'XML'], required: true,\
       default: 'HTML', desc: 'define your custom type'
     kortype :url, type: String, required: true, desc: 'Your URL'
-    kortype :item_selector, type: String, validate: ->(v){
-      v =~ /\A\S.+\S\Z/
-    }, desc: 'Your item css selector', required: true
-    kortype :title_selector, type: String, required: true, validate: ->(v){
-      v =~ /\A\S.+\S\Z/
-    }, desc: 'Your title css selector'
-    kortype :href_selector, type: String, required: true, validate: ->(v){
-      v =~ /\A\S.+\S\Z/
-    }, desc: 'Your href css selector'
-    kortype :description_selector, type: String, validate: ->(v){
-      v =~ /\A\S.+\S\Z/
-    }, desc: 'Your description css selector'
+    kortype :item_selector, type: String, desc: 'Your item css selector', required: true
+    kortype :title_selector, type: String, required: true, desc: 'Your title css selector'
+    kortype :href_selector, type: String, required: true, desc: 'Your href css selector'
+    kortype :description_selector, type: String, desc: 'Your description css selector'
 
     def run
       results = []
@@ -29,13 +21,13 @@ module SearchProvider
         else
           doc = Nokogiri::HTML(res)
         end
-        doc.css(self.item_selector).each do |item|
+        doc.css(self.item_selector).reverse.each do |item|
           result = {}
           result[:title] = item.css(self.title_selector).text.strip
-          result[:href]  = item.css(self.href_selector).first.try(:attr, 'href')
-          result[:description] = item.css(self.description).text
-          next if result[:title].blank? || result[:href].blank?
-          result[:domain] = URI.parse(result[:href]).host
+          result[:url]  = item.css(self.href_selector).first.try(:attr, 'href')
+          result[:description] = item.css(self.description_selector).text if self.description_selector.present?
+          next if result[:title].blank? || result[:url].blank?
+          result[:domain] = URI.parse(result[:url]).host
           if block_given?
             yield result
           end

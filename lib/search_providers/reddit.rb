@@ -17,7 +17,7 @@ module SearchProvider
       search_results = get_json url
       results = []
       if search_results
-        search_results['data']['children'].each do |result|
+        search_results['data']['children'].reverse.each do |result|
           result = {
             title: result['data']['title'],
             url: 'https://www.reddit.com' + result['data']['url'],

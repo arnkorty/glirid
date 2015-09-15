@@ -36,6 +36,12 @@ class Search < ActiveRecord::Base
     }
   end
 
+  def sync_run
+    self.current_work_id = SearchJob.perform_later(self.id).job_id
+    self.save
+    SyncStatus.sync(self.current_work_id)
+  end
+
   def current_status
     if self.current_work_id
       JobStatus.new(self.current_work_id).try(:status)
