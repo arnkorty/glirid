@@ -24,7 +24,7 @@ class Result < ActiveRecord::Base
 
 
   def abs_url
-    URI.join("http://#{self.domain}", self.url)
+    URI.join("http://#{self.domain}", self.url).to_s
   end
 
   private
