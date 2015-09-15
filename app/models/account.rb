@@ -12,7 +12,7 @@ class Account < ActiveRecord::Base
   has_many :search_tasks, through: :searches
 
   validates :email,
-    :presence => true, format: {with: email_regexp},
+    :presence => true, format: {with: email_regexp}
   validates_uniqueness_of :email, scope: :deleted_at, unless: :deleted?
 
   before_create :set_rss_token
