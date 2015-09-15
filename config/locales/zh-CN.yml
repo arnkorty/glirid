@@ -2,8 +2,28 @@
   common:
     email: '邮件地址'
     password: '密码'
-    site_description: '定制自己的搜索、RSS通知'
+    site_description: '定制你的RSS/Atom Feed'
     are_you_sure_and_never_spider: '确认删除？删除后将不会抓取这条数据！'
     login: 登录
     signup: 注册
     forget_password: 忘记密码?
+    change_password: 修改你的密码
+    send_me_reset_password_instructions: 重设密码
+    password_confirmation: 确认密码
+    update: 更新
+    edit: 编辑
+    new: 添加
+    new_password: 输入你的新密码
+    new_password_confirmation: 确认你的新密码
+    open_feed_url: 公开的Feed URL
+    are_you_sure: 确认删除
+    search: 搜索
+    result: 搜索结果
+    task: 任务
+    navs:
+      home: 首页
+      searches: 搜索
+      results: 搜索结果
+      my_feed: 我的Feed
+      task: 任务
+      current_running_task: 当前执行任务

@@ -5,7 +5,8 @@
   / = simple_form_for 'search' do |fs|
   = f.input :search_ids, as: :select, collection: current_account.searches.map{\
       |s| [s.name, s.id]\
-      }, input_html: {multiple: true }, wrapper: :horizontal_form
+      }, input_html: {multiple: true }, wrapper: :horizontal_form, \
+      selected: @feed_url.searches.map{|s| s.id}
 
   .actions.row
     = f.submit class: 'button small-offset-3'

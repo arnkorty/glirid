@@ -10,9 +10,9 @@ module SearchProvider
 
     def run
       if self.subreddit.present?
-        url = 'https://www.reddit.com/r/' + self.subreddit + '/search.json?q=' + self.query + '&limit=' + self.limit
+        url = 'https://www.reddit.com/r/' + self.subreddit + '/search.json?q=' + self.query + '&limit=' + self.limit.to_s
       else
-        url = 'https://www.reddit.com/search.json?q=' + self.query + '&limit=' + self.limit
+        url = 'https://www.reddit.com/search.json?q=' + self.query + '&limit=' + self.limit.to_s
       end
       search_results = get_json url
       results = []

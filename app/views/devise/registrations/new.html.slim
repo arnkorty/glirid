@@ -3,11 +3,12 @@
     | Glirid
   p.text-center
     = t('common.site_description')
-  = simple_form_for(resource, as: resource_name, url: session_path(resource_name),wrapper: 'hide_label_form') do |f|
-    = f.input :email 
-    = f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
-    = f.input :password_confirmation, required: true
+  = simple_form_for(resource, as: resource_name, url: registration_path(resource_name),wrapper: 'hide_label_form') do |f|
+    = f.input :email, autofocus: true, placeholder: t('common.email') 
+    = f.input :password, required: true, placeholder: t('common.password'), \
+      hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
+    = f.input :password_confirmation, required: true, placeholder: t('common.password_confirmation')
     .row
       .small-12.columns
-        = f.button :submit, "Log in", class: 'button small-12'
+        = f.button :submit, t("common.signup"), class: 'button small-12'
   = render "devise/shared/links"

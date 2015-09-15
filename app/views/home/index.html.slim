@@ -1,7 +1,5 @@
 .large-12
-  h3 Search
-  .small-6.text-left
-    = link_to t('common.new'), new_feed_url_path, class: 'button tiny'
+  h3 = t('common.open_feed_url')
   .right.top-pagination
     = will_paginate @feed_urls
   table.large-12
@@ -9,21 +7,16 @@
       th = t('activerecord.attributes.feed_url.name')
       th = t('activerecord.attributes.feed_url.is_open')
       th = t('activerecord.attributes.search.name')
-      th = t('activerecord.attributes.rss_feed.url_name')
-      th
+      th = t('activerecord.attributes.feed_url.description')
+      th = t('activerecord.attributes.feed_url.url_name')
     - @feed_urls.each do |feed|
       tr
         td = feed.name
         td = feed.is_open
-        td = 
         td = feed.searches.map(&:name).join('、')
+        th = truncate(feed.description, length: 20)
         td 
           = link_to 'RSS URL', rss_feed_url_path(feed)
           | &nbsp;&nbsp;
           = link_to 'atom URL', atom_feed_url_path(feed)
-        td 
-          = link_to edit_feed_url_path(feed) do
-            i.fa.fa-edit 
-          | &nbsp;&nbsp;
-          = link_to feed, data: {:confirm => 'are_you_sure'}, :method => :delete do
-            i.fa.fa-times
+    

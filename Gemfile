@@ -55,6 +55,7 @@ gem 'kortype', github: 'arnkorty/kortype'
 gem 'font-awesome-sass'
 
 gem "paranoia", "~> 2.0"
+gem 'paranoia_uniqueness_validator', '1.1.0'
 
 gem 'stringex'
 

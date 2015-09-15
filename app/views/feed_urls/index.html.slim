@@ -1,5 +1,5 @@
 .large-12
-  h3 Search
+  h3 = t('common.search')
   .small-6.text-left
     = link_to t('common.new'), new_feed_url_path, class: 'button tiny'
   .right.top-pagination
@@ -18,12 +18,12 @@
         td = 
         td = feed.searches.map(&:name).join('、')
         td 
-          = link_to 'RSS URL', rss_feed_url_path(feed)
+          = link_to 'RSS', url_by_feed(feed, :rss)
           | &nbsp;&nbsp;
-          = link_to 'atom URL', atom_feed_url_path(feed)
+          = link_to 'Atom', url_by_feed(feed, :atom)
         td 
           = link_to edit_feed_url_path(feed) do
             i.fa.fa-edit 
           | &nbsp;&nbsp;
-          = link_to feed, data: {:confirm => 'are_you_sure'}, :method => :delete do
+          = link_to feed, data: {:confirm => t('common.are_you_sure')}, :method => :delete, remote: true do
             i.fa.fa-times

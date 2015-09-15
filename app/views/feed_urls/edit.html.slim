@@ -1,8 +1,8 @@
-h1 Editing feed_url
-
+.row
+  h3.small-offset-3
+    = t('common.edit') + "Feed URL"
 == render 'form'
-
-= link_to 'Show', @feed_url
-'|
-= link_to 'Back', feed_urls_path
-
+.row
+  = link_to 'Show', @feed_url
+  '|
+  = link_to 'Back', feed_urls_path

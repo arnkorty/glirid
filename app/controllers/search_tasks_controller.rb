@@ -5,7 +5,9 @@ class SearchTasksController < ApplicationController
   # GET /search_tasks
   # GET /search_tasks.json
   def index
-    @search_tasks = SearchTask.all.where(params.slice(:search_id)).paginate(page: params[:page])
+    @search_tasks = current_account.search_tasks
+      .where(params.slice(:search_id))
+      .paginate(page: params[:page])
   end
 
   # GET /search_tasks/1
@@ -15,7 +17,7 @@ class SearchTasksController < ApplicationController
 
   # GET /search_tasks/new
   def new
-    @search_task = SearchTask.new(begin_at: Time.now.to_s(:db))
+    @search_task = current_account.search_tasks.new(begin_at: 10.minute.from_now.to_s(:db))
   end
 
   # GET /search_tasks/1/edit
@@ -25,7 +27,7 @@ class SearchTasksController < ApplicationController
   # POST /search_tasks
   # POST /search_tasks.json
   def create
-    @search_task = SearchTask.new(search_task_params)
+    @search_task = current_account.search_tasks.build(search_task_params)
     @search_task.search = @search if @search
     respond_to do |format|
       if @search_task.save
@@ -69,7 +71,7 @@ class SearchTasksController < ApplicationController
     end
 
     def set_search
-      if params[:search_id]
+      if params[:search_id].present?
         @search = Search.find params[:search_id]
       end
     end

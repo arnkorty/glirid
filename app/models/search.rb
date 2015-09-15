@@ -8,7 +8,7 @@ class Search < ActiveRecord::Base
   belongs_to :account
   has_many :search_tasks
   has_many :results
-  has_many :feed_url_searches
+  has_many :feed_urls_searches
   has_and_belongs_to_many :feed_urls
 
   validates :name, :account_id, presence: true
@@ -16,7 +16,7 @@ class Search < ActiveRecord::Base
   validates_with ProviderValidator
 
   after_initialize do |search|
-    unless search.new_record?
+    if search.new_record?
       search.provider ||= PROVIDERS[0][1]
     end
   end

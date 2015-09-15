@@ -1,7 +1,7 @@
 class SearchTask < ActiveRecord::Base
   belongs_to :search
   belongs_to :frequency
-  belongs_to :search
+  # belongs_to :account, through: :search
 
   delegate :name, to: :frequency, prefix: true, allow_nil: true
   delegate :name, to: :search, prefix: true, allow_nil: true

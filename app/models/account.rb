@@ -1,18 +1,29 @@
 class Account < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
+  acts_as_paranoid
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :results
   has_many :searches
   has_many :feed_urls
-  has_many :search_tasks
+  has_many :search_tasks, through: :searches
+
+  validates :email,
+    :presence => true,
+    :uniqueness => true, if: :deleted?
 
   before_create :set_rss_token
 
   def admin?
     self.admin
+  end
+
+  # overwrite devise email validation
+  def email_changed?
+    false
   end
 
   private

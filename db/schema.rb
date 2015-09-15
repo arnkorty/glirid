@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150915020145) do
+ActiveRecord::Schema.define(version: 20150915070126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,9 +33,11 @@ ActiveRecord::Schema.define(version: 20150915020145) do
     t.datetime "updated_at",                             null: false
     t.boolean  "admin",                  default: false
     t.string   "rss_token"
+    t.datetime "deleted_at"
   end
 
-  add_index "accounts", ["email"], name: "index_accounts_on_email", unique: true, using: :btree
+  add_index "accounts", ["deleted_at"], name: "index_accounts_on_deleted_at", using: :btree
+  add_index "accounts", ["email"], name: "index_accounts_on_email", using: :btree
   add_index "accounts", ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true, using: :btree
 
   create_table "feed_url_searches", force: :cascade do |t|
@@ -61,6 +63,16 @@ ActiveRecord::Schema.define(version: 20150915020145) do
   end
 
   add_index "feed_urls", ["account_id"], name: "index_feed_urls_on_account_id", using: :btree
+
+  create_table "feed_urls_searches", force: :cascade do |t|
+    t.integer  "feed_url_id"
+    t.integer  "search_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "feed_urls_searches", ["feed_url_id"], name: "index_feed_urls_searches_on_feed_url_id", using: :btree
+  add_index "feed_urls_searches", ["search_id"], name: "index_feed_urls_searches_on_search_id", using: :btree
 
   create_table "frequencies", force: :cascade do |t|
     t.string   "name"
@@ -141,6 +153,8 @@ ActiveRecord::Schema.define(version: 20150915020145) do
   add_foreign_key "feed_url_searches", "feed_urls"
   add_foreign_key "feed_url_searches", "searches"
   add_foreign_key "feed_urls", "accounts"
+  add_foreign_key "feed_urls_searches", "feed_urls"
+  add_foreign_key "feed_urls_searches", "searches"
   add_foreign_key "results", "accounts"
   add_foreign_key "results", "searches"
   add_foreign_key "rss_feed_searches", "rss_feeds"

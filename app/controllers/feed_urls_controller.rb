@@ -1,11 +1,13 @@
 class FeedUrlsController < ApplicationController
-  before_action :set_feed_url, only: [:show, :edit, :update, :destroy]
+  before_action :set_feed_url, only: [:show, :edit, :update, :destroy, :rss, :atom]
   skip_filter :authenticate_account!, only: [:rss, :atom]
+
+  layout false, only: [:rss, :atom]
 
   # GET /feed_urls
   # GET /feed_urls.json
   def index
-    @feed_urls = current_account.feed_urls.paginate(page: params[:page])
+    @feed_urls = current_account.feed_urls.paginate(page: params[:page]).order(id: :desc)
   end
 
   # GET /feed_urls/1
@@ -29,7 +31,7 @@ class FeedUrlsController < ApplicationController
 
     respond_to do |format|
       if @feed_url.save
-        format.html { redirect_to @feed_url, notice: 'Feed url was successfully created.' }
+        format.html { redirect_to feed_urls_path, notice: 'Feed url was successfully created.' }
         format.json { render :show, status: :created, location: @feed_url }
       else
         format.html { render :new }
@@ -47,7 +49,7 @@ class FeedUrlsController < ApplicationController
   def update
     respond_to do |format|
       if @feed_url.update(feed_url_params)
-        format.html { redirect_to @feed_url, notice: 'Feed url was successfully updated.' }
+        format.html { redirect_to feed_urls_path, notice: 'Feed url was successfully updated.' }
         format.json { render :show, status: :ok, location: @feed_url }
       else
         format.html { render :edit }
