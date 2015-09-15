@@ -1,0 +1,19 @@
+/ = simple_form_for @search_task, wrapper: :horizontal_form do |f|
+/   = hidden_field_tag 'search_id', params[:search_id]
+/   = f.input :name
+/   = f.association :search, disabled: params[:search_id].present?, \
+/     selected: params[:search_id], include_blank: false
+/   = f.association :frequency, include_blank: false
+/   = f.input :begin_at, as: :string, input_html:{class: 'fdatetimepicker'}
+/   .actions.row
+/     = f.submit class: 'button small-offset-3'
+= simple_form_for @rss_feed, wrapper: :horizontal_form do |f|
+  = f.input :name
+  = f.input :limit
+  / = simple_form_for 'search' do |fs|
+  = f.input :search_ids, as: :select, collection: current_account.searches.map{\
+      |s| [s.name, s.id]\
+      }, input_html: {multiple: true }, wrapper: :horizontal_form
+
+  .actions.row
+    = f.submit class: 'button small-offset-3'

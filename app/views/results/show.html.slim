@@ -1,0 +1,27 @@
+p#notice = notice
+
+p
+  strong Search:
+  = @result.search
+p
+  strong Account:
+  = @result.account
+p
+  strong Title:
+  = @result.title
+p
+  strong Url:
+  = @result.url
+p
+  strong Domain:
+  = @result.domain
+p
+  strong Description:
+  = @result.description
+p
+  strong Task at:
+  = @result.task_at
+
+= link_to 'Edit', edit_result_path(@result)
+'|
+= link_to 'Back', results_path

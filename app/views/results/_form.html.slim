@@ -1,0 +1,30 @@
+= form_for @result do |f|
+  - if @result.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@result.errors.count, "error")} prohibited this result from being saved:"
+      ul
+        - @result.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :search
+    = f.text_field :search
+  .field
+    = f.label :account
+    = f.text_field :account
+  .field
+    = f.label :title
+    = f.text_field :title
+  .field
+    = f.label :url
+    = f.text_field :url
+  .field
+    = f.label :domain
+    = f.text_field :domain
+  .field
+    = f.label :description
+    = f.text_area :description
+  .field
+    = f.label :task_at
+    = f.datetime_select :task_at
+  .actions = f.submit

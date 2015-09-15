@@ -1,0 +1,11 @@
+= simple_form_for @feed_url, wrapper: :horizontal_form do |f|
+  = f.input :name
+  = f.input :limit
+  = f.input :is_open
+  / = simple_form_for 'search' do |fs|
+  = f.input :search_ids, as: :select, collection: current_account.searches.map{\
+      |s| [s.name, s.id]\
+      }, input_html: {multiple: true }, wrapper: :horizontal_form
+
+  .actions.row
+    = f.submit class: 'button small-offset-3'

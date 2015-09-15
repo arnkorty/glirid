@@ -1,0 +1,42 @@
+.large-12.columns
+  .tab
+    h3.left Results
+    .right.top-pagination
+      = will_paginate @results
+  table.large-12
+    tr
+      th
+        = t('activerecord.attributes.search.name')
+        = render_filter_sort 'search.name', current_account.searches.map(&:name)
+      th 
+        = t('activerecord.attributes.result.provider')
+        = render_filter_sort 'search.provider', current_account.searches.map(&:provider)
+      th 
+        = t('activerecord.attributes.result.title')
+        = render_filter_sort 'title'
+      th = t('activerecord.attributes.result.description')
+      th 
+        = t('activerecord.attributes.result.url')
+        = render_filter_sort 'url'
+      th 
+        = t('activerecord.attributes.result.updated_at')
+        = render_filter_sort 'updated_at'
+      th
+    - @results.each do |result|
+      tr
+        th = link_to result.search.name, result.search
+        td = result.provider
+        td = truncate(result.title, length: 30)
+        td
+          = link_to truncate(strip_tags(result.description), length: 30), '#', \ 
+            data:{'reveal-id' => "result-modal-#{result.id}", \
+            'reveal-ajax' => result_path(result, flag: 'modal')}
+          div.reveal-modal id="result-modal-#{result.id}" data-reveal=true aria-hidden="true" role="dialog"
+            / h3 = link_to result.title, result.url
+            / .content = simple_format(result.description)
+        td = link_to 'Go to URL', result.url, target: '_blank', title: result.url
+        td = result.updated_at.to_s(:db)
+        td 
+          = link_to result, data: {:confirm => t('common.are_you_sure_and_never_spider')}, :method => :delete, remote: true do
+            i.fa.fa-times
+  = will_paginate @results, class: 'bottom-pagination pagination'

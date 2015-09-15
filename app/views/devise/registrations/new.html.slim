@@ -1,0 +1,13 @@
+.radius.large-6.large-offset-3.columns.form-container
+  h3.text-center
+    | Glirid
+  p.text-center
+    = t('common.site_description')
+  = simple_form_for(resource, as: resource_name, url: session_path(resource_name),wrapper: 'hide_label_form') do |f|
+    = f.input :email 
+    = f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
+    = f.input :password_confirmation, required: true
+    .row
+      .small-12.columns
+        = f.button :submit, "Log in", class: 'button small-12'
+  = render "devise/shared/links"

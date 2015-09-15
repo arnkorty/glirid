@@ -1,0 +1,13 @@
+= simple_form_for @search, wrapper: :horizontal_form do |f|
+  / = f.error_notification
+
+  = f.input :name
+  = f.input :provider, collection: Search::PROVIDERS, include_blank: false, \
+    input_html: {id: 'provider-selector'}, disabled: !@search.new_record?
+  = f.input :description
+  .row
+    #provider-form.small-offset-1.small-11.columns
+      - if @search.provider.present?
+        = render 'searches/provider_form', search: @search
+  .row.actions 
+    = f.submit class: 'button small-offset-3'

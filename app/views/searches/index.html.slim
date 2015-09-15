@@ -1,0 +1,29 @@
+.large-12
+  h3 Search
+  .small-12.text-left
+    = link_to t('common.new'), new_search_path, class: 'button tiny'
+    | &nbsp;&nbsp;
+    = link_to t('common.run_all'), '', class: 'button tiny'
+  table.large-12
+    tr
+      th = t('activerecord.attributes.search.name')
+      th = t('activerecord.attributes.search.provider')
+      th = t('activerecord.attributes.search.description')
+      th = t('activerecord.attributes.search.current_status')
+      th = t('activerecord.attributes.search.next_at')
+      th
+    - @searches.each do |search|
+      tr
+        td = link_to search.name, search
+        td = search.provider
+        td = truncate(search.description, length: 20)
+        td = t(search.try(:current_status))
+        td = search.next_at
+        td 
+          = link_to edit_search_path(search) do
+            i.fa.fa-edit 
+          | &nbsp;&nbsp;
+          = link_to search, data: {:confirm => 'are_you_sure'}, :method => :delete do
+            i.fa.fa-times
+          | &nbsp;&nbsp;
+          = link_to 'Run', run_search_path(search), remote: true

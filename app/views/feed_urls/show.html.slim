@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @feed_url.name
+p
+  strong Description:
+  = @feed_url.description
+p
+  strong Account:
+  = @feed_url.account
+p
+  strong Token:
+  = @feed_url.token
+
+= link_to 'Edit', edit_feed_url_path(@feed_url)
+'|
+= link_to 'Back', feed_urls_path

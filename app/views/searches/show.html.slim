@@ -1,0 +1,60 @@
+.container
+  h3 search detail
+  .large-6.columns
+    table.large-12.columns
+      tr
+        td.header Name
+        td = @search.name
+      tr
+        td.header provider
+        td = @search.provider
+      tr
+        td.header description
+        td = @search.name
+      tr
+        td.header Last at
+        td = @search.last_at
+      tr
+        td.header = t('common.current_status')
+        td id="search-status-#{@search.id}" class="search-status #{@search.current_status}"
+          = @search.current_status.present? ? t("job_status.#{@search.current_status}") : nil
+      - @search.options.each do |key, value|
+        tr
+          td.header = key
+          td = value
+    .row.cleafix  
+      .small-4.columns.text-left
+        = link_to t('common.back'), searches_path, class: 'button tiny'
+      .small-4.columns.text-center
+        / Temporarily using normal access Update
+        = link_to t('common.run'), run_search_path(@search), remote: true, class: 'button tiny'
+      .small-4.columns.text-right
+        = link_to t('common.edit'), edit_search_path(@search), class: 'button tiny'
+        
+  .large-6.columns
+    .large-12.columns
+      table.large-12.columns
+        tr
+          th colspan=2
+            h4 tasks
+          th.text-right colspan=3
+            = link_to 'new', new_search_search_task_path(@search) , class: 'button tiny'
+        tr
+          th Name
+          th frequency
+          th begin_at
+          th next_at
+          th
+        - @search.search_tasks.each do |task|
+          tr
+            td = task.name
+            td = task.frequency_name
+            td = task.begin_at.to_s(:short)
+            td = task.next_at.try(:to_s, :short)
+            td
+              = link_to edit_search_search_task_path(task, search_id: task.search_id) do
+                i.fa.fa-edit
+              | &nbsp;&nbsp; &nbsp;&nbsp;
+              = link_to search_search_task_path(task, search_id: task.search_id), method: :delete,\
+                confirm: {data: 'Are you sure?'} do
+                i.fa.fa-times

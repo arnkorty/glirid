@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Search:
+  = @search_task.search
+p
+  strong Frequency:
+  = @search_task.frequency
+p
+  strong Begin at:
+  = @search_task.begin_at
+
+= link_to 'Edit', edit_search_task_path(@search_task)
+'|
+= link_to 'Back', search_tasks_path

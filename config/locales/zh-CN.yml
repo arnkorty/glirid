@@ -1,0 +1,9 @@
+'zh-CN':
+  common:
+    email: '邮件地址'
+    password: '密码'
+    site_description: '定制自己的搜索、RSS通知'
+    are_you_sure_and_never_spider: '确认删除？删除后将不会抓取这条数据！'
+    login: 登录
+    signup: 注册
+    forget_password: 忘记密码?

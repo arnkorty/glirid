@@ -1,0 +1,29 @@
+ul.left
+  li
+    = link_to 'Home', root_path
+  li.divider
+  li
+    = link_to 'Searches', searches_path
+  li.divider
+  li = link_to 'Results', results_path
+ul.right
+  li.show-for-large-up.quick-query
+    = form_tag results_path(params.slice(:sort, :filter)), method: :get
+      input type='text' name="query" placeholder='quick query results' value=params[:query]
+  li.divider
+  li = link_to t('common.my_feed'), feed_urls_path
+  li.divider
+  li.has-dropdown.not-click
+    = link_to 'Task', search_tasks_path
+    ul.dropdown
+      li = link_to 'Curent Running Tasks', search_tasks_path(status: :running)
+  li.divider
+  li.has-dropdown.not-click
+    = link_to current_account.email
+    ul.dropdown
+      li = link_to 'change Password', edit_account_registration_path
+      li = link_to 'Log out', destroy_account_session_path, method: :delete
+  li.divider
+  li.fork
+    = link_to 'https://github.com/arnkorty/glirid' do
+      i.fa.fa-code-fork

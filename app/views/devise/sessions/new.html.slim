@@ -1,0 +1,13 @@
+.radius.large-6.large-offset-3.columns.form-container
+  h3.text-center
+    | Glirid
+  p.text-center
+    = t('common.site_description')
+  = simple_form_for(resource, as: resource_name, url: session_path(resource_name),wrapper: 'hide_label_form') do |f|
+    = f.input :email, placeholder: t('common.email')
+    = f.input :password, placeholder: t('common.password') 
+    = f.input :remember_me, as: :boolean, wrapper: 'hide_label_horizontal_radio_and_checkboxes'
+    .row
+      .small-12.columns
+        = f.button :submit, t('common.login'), class: 'button small-12'
+  = render "devise/shared/links"

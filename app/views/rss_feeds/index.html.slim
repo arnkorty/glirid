@@ -1,0 +1,23 @@
+.large-12
+  h3 Search
+  .small-6.text-left
+    = link_to t('common.new'), new_rss_feed_path, class: 'button tiny'
+  .right.top-pagination
+    = will_paginate @results
+  table.large-12
+    tr
+      th = t('activerecord.attributes.rss_feed.name')
+      th = t('activerecord.attributes.search.name')
+      th = t('activerecord.attributes.rss_feed.url_name')
+      th
+    - @rss_feeds.each do |rss|
+      tr
+        td = rss.name
+        td = rss.searches.map(&:name).join('、')
+        td = link_to 'RSS URL', rss_rss_feed_path(rss)
+        td 
+          = link_to edit_rss_feed_path(rss) do
+            i.fa.fa-edit 
+          | &nbsp;&nbsp;
+          = link_to rss, data: {:confirm => 'are_you_sure'}, :method => :delete do
+            i.fa.fa-times

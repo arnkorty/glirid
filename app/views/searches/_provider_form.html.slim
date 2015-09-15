@@ -1,0 +1,3 @@
+.panel.callout
+  = simple_fields_for 'search[options]', search, wrapper: 'horizontal_form' do |f| 
+    == render_provider_form(search.provider.constantize, f, search.options)

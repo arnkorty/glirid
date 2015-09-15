@@ -1,0 +1,4 @@
+/ div.reveal-modal id="result-modal-#{result.id}" data-reveal=true aria-hidden="true" role="dialog"
+h3 = link_to result.title, result.url
+.content = simple_format(result.description)
+a.close-reveal-modal aria-label="Close" &#215;

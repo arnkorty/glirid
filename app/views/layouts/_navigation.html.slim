@@ -1,0 +1,10 @@
+nav.top-bar[data-topbar]
+  ul.title-area
+    li.name
+      h1
+        = link_to 'Glirid', root_path
+    li.toggle-topbar.menu-icon
+      a[href="#"]
+        span Menu
+  .top-bar-section.large-offset-1
+    == render 'layouts/navigation_links'

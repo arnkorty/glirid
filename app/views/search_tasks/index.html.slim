@@ -1,0 +1,27 @@
+.large-12
+  h3 Search
+  .small-6.text-left
+    = link_to t('common.new'), new_search_task_path, class: 'button tiny'
+  .right.top-pagination
+    = will_paginate @results
+  table.large-12
+    tr
+      th = t('activerecord.attributes.search_task.name')
+      th = t('activerecord.attributes.search.name')
+      th = t('activerecord.attributes.search_task.frequency')
+      th = t('activerecord.attributes.search.begin_at')
+      th = t('activerecord.attributes.search.next_at')
+      th
+    - @search_tasks.each do |task|
+      tr
+        td = task.name
+        td = link_to task.search_name, task.search
+        td = task.frequency_name
+        td = task.begin_at
+        td = task.next_at
+        td 
+          = link_to edit_search_task_path(task, search_id: task.search_id) do
+            i.fa.fa-edit 
+          | &nbsp;&nbsp;
+          = link_to task, data: {:confirm => 'are_you_sure'}, :method => :delete do
+            i.fa.fa-times
