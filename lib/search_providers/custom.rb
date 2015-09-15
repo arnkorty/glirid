@@ -27,7 +27,7 @@ module SearchProvider
           result[:url]  = item.css(self.href_selector).first.try(:attr, 'href')
           result[:description] = item.css(self.description_selector).text if self.description_selector.present?
           next if result[:title].blank? || result[:url].blank?
-          result[:domain] = URI.parse(result[:url]).host
+          result[:domain] = URI.parse(result[:url]).host || URI.parse(self.url).host
           if block_given?
             yield result
           end
