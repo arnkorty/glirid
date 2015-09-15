@@ -13,8 +13,8 @@ xml.rss(version: '2.0') do
         xml.description raw(result.description)
         xml.author result.domain
         xml.pubDate result.created_at.strftime('%a, %d %b %Y %H:%M:%S %z')
-        xml.link result.url
-        xml.guid result.url
+        xml.link result.abs_url
+        xml.guid result.abs_url
       end
     end
   end

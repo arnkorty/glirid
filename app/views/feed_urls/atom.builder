@@ -5,7 +5,7 @@ atom_feed('xmlns:app' => 'http://www.w3.org/2007/app',
   feed.tag!('openSearch:totalResults', @feed_url.limit)
 
   @feed_url.results.limit(@feed_url.limit).each do |result|
-    feed.entry(result, url: result.url) do |entry|
+    feed.entry(result, url: result.abs_url) do |entry|
       entry.title(result.title)
       entry.content(result.description, type: 'html')
       #  entry.link(href: result.url, rel: 'hub')
