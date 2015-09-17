@@ -9,7 +9,7 @@ class Result < ActiveRecord::Base
 
   before_validation :set_account
 
-  delegate :provider, to: :search
+  delegate :provider, to: :search, allow_nil: true
   alias_attribute :name, :title
 
   include PgSearch
