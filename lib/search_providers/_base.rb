@@ -5,35 +5,45 @@ module  SearchProvider
   class Base
     include Kortype
     def self.provider_name
-      raise 'Please set provider name!'
+      fail 'Please set provider name!'
     end
 
     def self.options
     end
 
-    def get_response url
-      url = URI.escape url
-      response = Net::HTTP.get_response URI(url)
-      if response.code == '200'
+    def get_response(url)
+      uri = URI URI.escape(url)
+      http = Net::HTTP.new(uri.host, uri.port)
+
+      request = Net::HTTP::Get.new(uri.request_uri)
+      if url.start_with?('https')
+        http.use_ssl = true
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      end
+      request = Net::HTTP::Get.new(uri.request_uri)
+      response = http.request(request)
+      if response.code =~ /^3/ && @try_time > 0 && response['location']
+        get_response response['location']
+      elsif response.code == '200'
         response.body
       end
+      # response.status
     end
 
-    def get_json url
+    def get_json(url)
       res = get_response url
-      if res
-        JSON.parse res
-      end
+      JSON.parse res if res
     end
 
-    def initialize options = {}
+    def initialize(options = {})
+      @try_time = 3
       kortype_columns.each do |key, col|
         col.value = options[key]
       end
     end
 
     def run
-      raise 'Please set run method'
+      fail 'Please set run method'
     end
   end
 end
