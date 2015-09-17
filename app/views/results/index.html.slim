@@ -24,7 +24,7 @@
       th
     - @results.each do |result|
       tr
-        th = link_to result.search.name, result.search
+        th = link_to result.search.try(:name), result.search
         td = result.provider
         td = truncate(result.title, length: 30)
         td
